@@ -1,4 +1,5 @@
 from fastapi import FastAPI, WebSocket, WebSocketDisconnect
+from fastapi.middleware.cors import CORSMiddleware
 from config import TOPIC
 from llm import *
 from ws import *
@@ -12,6 +13,18 @@ import asyncio
 import audioop
 
 app = FastAPI()
+
+origins = [          
+    "https://prepped-3qxo.onrender.com" 
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 # --- ⏱️ TIMING CONFIGURATION ---
 SILENCE_THRESHOLD = 3.0       
@@ -249,6 +262,3 @@ async def audio_ws(ws: WebSocket):
 
     except WebSocketDisconnect:
         print("User disconnected")
-
-if __name__ == "__main__":
-    uvicorn.run(app, host="0.0.0.0", port=8000)

@@ -9,7 +9,7 @@ export function AuthProvider({ children }) {
   useEffect(() => {
     async function fetchUser() {
       try {
-        const res = await fetch("http://localhost:5000/api/auth/me", {
+        const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/auth/me`, {
           credentials: "include", // IMPORTANT for session cookies
         });
 

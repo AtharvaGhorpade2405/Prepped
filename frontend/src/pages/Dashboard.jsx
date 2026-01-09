@@ -13,7 +13,7 @@ function Dashboard() {
 
     async function fetchInterviews() {
       try {
-        const res = await fetch("http://localhost:5000/api/interviews/mine", {
+        const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/interviews/mine`, {
           credentials: "include",
         });
         const data = await res.json();
