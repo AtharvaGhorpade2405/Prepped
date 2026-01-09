@@ -1,0 +1,20 @@
+@import "tailwindcss";
+
+@keyframes voice {
+  0% {
+    height: 0.5rem;
+    opacity: 0.5;
+  }
+  50% {
+    height: 2rem;
+    opacity: 1;
+  }
+  100% {
+    height: 0.5rem;
+    opacity: 0.5;
+  }
+}
+
+.animate-voice {
+  animation: voice 1s ease-in-out infinite;
+}
