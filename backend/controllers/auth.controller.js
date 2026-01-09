@@ -1,5 +1,5 @@
 export function loginSuccess(req, res) {
-  res.redirect(`${FRONTEND_URL}/dashboard`);
+  res.redirect(`${process.env.FRONTEND_URL}/dashboard`);
 }
 
 export function getUser(req, res) {
