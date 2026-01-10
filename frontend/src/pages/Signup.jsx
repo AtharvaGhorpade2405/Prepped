@@ -1,4 +1,3 @@
-// src/pages/Signup.jsx
 import Navbar from "../components/Navbar";
 
 function Signup() {

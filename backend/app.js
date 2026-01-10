@@ -13,26 +13,25 @@ const app = express();
 
 app.use(express.json());
 
+app.set("trust proxy", 1);
+
 app.use(
   cors({
     origin: process.env.FRONTEND_URL,
-    // origin: ["*"],
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-    allowedHeaders: ["Content-Type", "Authorization"],
-    sameSite: "lax",
     credentials: true,
   })
 );
 
 app.use(
   session({
+    name: "prepped.sid",
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
     cookie: {
       httpOnly: true,
-      secure: true,        
-      sameSite: "none",    
+      secure: true,      // required in production
+      sameSite: "none",  // required for cross-site cookies
     },
   })
 );
