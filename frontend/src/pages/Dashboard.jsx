@@ -54,15 +54,12 @@ useEffect(() => {
     fetchInterviews();
   }, [user]);
 
-  if (loading || fetching) {
-    return <div className="p-6 text-gray-300">Loading...</div>;
-  }
-
   return (
     <div className="min-h-screen bg-gray-950 text-gray-100">
       <Navbar />
 
       <main className="max-w-5xl mx-auto p-6">
+        {(loading || fetching ) && <p>Loading...</p>}
         <h1 className="text-2xl font-semibold mb-6">Your Interviews</h1>
 
         {interviews.length === 0 && (
