@@ -107,7 +107,7 @@ function Interview() {
     setStatus("Connecting…");
     setInterviewLoading(true);
 
-    const ws = new WebSocket("ws://localhost:8000/ws/audio");
+    const ws = new WebSocket(`${import.meta.env.VITE_WS_URL}`);
     ws.binaryType = "arraybuffer";
     wsRef.current = ws;
 
