@@ -29,9 +29,17 @@ app.use(
     resave: false,
     saveUninitialized: false,
     cookie: {
+      // 1. Allow cross-site usage
+      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+
+      // 2. Cookie only works over HTTPS
+      secure: process.env.NODE_ENV === "production",
+
+      // 3. Duration (e.g., 24 hours)
+      maxAge: 24 * 60 * 60 * 1000,
+
+      // 4. Client-side JS cannot read this (Security best practice)
       httpOnly: true,
-      secure: true,      // required in production
-      sameSite: "none",  // required for cross-site cookies
     },
   })
 );
