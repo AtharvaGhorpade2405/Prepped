@@ -3,7 +3,6 @@ import interviewRoutes from "./routes/interviewRoutes.js";
 import authRoutes from "./routes/auth.routes.js";
 import cors from "cors";
 import dotenv from "dotenv";
-import session from "express-session";
 import passport from "passport";
 import configurePassport from "./config/passport.js";
 
@@ -11,43 +10,25 @@ dotenv.config();
 
 const app = express();
 
+// 1. Basic Middleware
 app.use(express.json());
+app.set("trust proxy", 1); // Good to keep for Render/Proxies
 
-app.set("trust proxy", 1);
-
+// 2. CORS (Simplified)
+// Since we aren't sending credentials/cookies, the config is simpler.
 app.use(
   cors({
-    origin: process.env.FRONTEND_URL,
-    credentials: true,
+    origin: process.env.FRONTEND_URL, 
+    // credentials: true, <--- You can remove this line now
   })
 );
 
-app.use(
-  session({
-    name: "prepped.sid",
-    secret: process.env.SESSION_SECRET,
-    resave: false,
-    saveUninitialized: false,
-    cookie: {
-      // 1. Allow cross-site usage
-      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
-
-      // 2. Cookie only works over HTTPS
-      secure: process.env.NODE_ENV === "production",
-
-      // 3. Duration (e.g., 24 hours)
-      maxAge: 24 * 60 * 60 * 1000,
-
-      // 4. Client-side JS cannot read this (Security best practice)
-      httpOnly: true,
-    },
-  })
-);
-
+// 3. Initialize Passport
+// We ONLY need initialize. We DO NOT need session().
 configurePassport();
 app.use(passport.initialize());
-app.use(passport.session());
 
+// 4. Routes
 app.use("/api", interviewRoutes);
 app.use("/api/auth", authRoutes);
 

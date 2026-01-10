@@ -12,6 +12,8 @@ export async function createInterview(req, res) {
       return res.status(400).json({ error: "Missing required fields" });
     }
 
+    // 1. Reconstruct the payload string exactly as the Python server did it
+    // (Ensure your verifySignature function matches the python logic)
     const payloadString =
       `${interview_id}|${timestamp}|` +
       stringify(summary);
@@ -27,6 +29,7 @@ export async function createInterview(req, res) {
 
     const now = Math.floor(Date.now() / 1000);
 
+    // 2. Check if the payload is too old (e.g., prevent replay attacks)
     if (Math.abs(now - timestamp) > MAX_AGE_SECONDS) {
       return res.status(400).json({ error: "Expired payload" });
     }
@@ -36,8 +39,9 @@ export async function createInterview(req, res) {
       return res.status(409).json({ error: "Interview already stored" });
     }
 
+    // 3. Create the Record
     const interview = await Interview.create({
-      user: req.user._id,
+      user: req.userId, // 👈 CHANGED: Uses the ID extracted by your JWT middleware
       interview_id,
       topic,
       final_summary: summary,
@@ -56,13 +60,8 @@ export async function createInterview(req, res) {
 }
 
 export async function getMyInterviews(req, res) {
-  if (!req.user) {
-    return res.status(401).json({ error: "Not authenticated" });
-  }
-
-  const interviews = await Interview.find({ user: req.user._id }).sort({
+  const interviews = await Interview.find({ user: req.userId }).sort({
     createdAt: -1,
   });
-
   res.json(interviews);
 }
