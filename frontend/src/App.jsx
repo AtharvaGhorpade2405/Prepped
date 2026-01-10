@@ -9,6 +9,7 @@ import InterviewSetup from "./pages/InterviewSetup";
 function App() {
   return (
     <Routes>
+      <Route path="/index.html" element={<Navigate to="/" replace />} />
       <Route path="/" element={<Landing />} />
       <Route path="/interview" element={<Interview />} />
       <Route path="/login" element={<Login />} />
