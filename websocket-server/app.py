@@ -33,6 +33,10 @@ MAX_ANSWER_DURATION = 90.0
 VAD_THRESHOLD = 800           
 CONSECUTIVE_LOUD_FRAMES = 3   
 
+@app.get("/health")
+async def health_check():
+    return {"status": "active", "message": "I am awake!"}
+
 @app.websocket("/ws/audio")
 async def audio_ws(ws: WebSocket):
     await ws.accept()
