@@ -59,7 +59,6 @@ useEffect(() => {
       <Navbar />
 
       <main className="max-w-5xl mx-auto p-6">
-        {(loading || fetching ) && <p>Loading...</p>}
         <h1 className="text-2xl font-semibold mb-6">Your Interviews</h1>
 
         {interviews.length === 0 && (
