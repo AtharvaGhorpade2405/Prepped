@@ -1,22 +1,33 @@
+import User from "../models/User.js";
+import jwt from "jsonwebtoken"
+
 export function loginSuccess(req, res) {
-  res.redirect(`${process.env.FRONTEND_URL}/dashboard`);
+  const user = req.user;
+    const token = jwt.sign(
+      { id: user._id, email: user.email }, // Payload
+      process.env.JWT_SECRET,             // Secret Key (Add this to Render Env Vars!)
+      { expiresIn: "24h" }
+    );
+
+    // 3. Redirect to Frontend with Token in URL
+    // We send them to the dashboard and attach the token as a query param
+    res.redirect(`${process.env.FRONTEND_URL}/dashboard?token=${token}`);
 }
 
-export function getUser(req, res) {
-  if (!req.user) {
-    return res.status(401).json({ user: null });
+export async function getUser(req, res) {
+// Get token from "Authorization: Bearer <token>"
+  const authHeader = req.headers.authorization;
+  
+  if (!authHeader) return res.status(401).json({ user: null });
+
+  const token = authHeader.split(" ")[1]; // Remove "Bearer "
+
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    // Find user in DB based on decoded.id
+    const user = await User.findById(decoded.id); 
+    res.json(user);
+  } catch (err) {
+    res.status(401).json({ user: null });
   }
-
-  res.json({
-    id: req.user._id,
-    email: req.user.email,
-    name: req.user.name,
-    avatar: req.user.avatar,
-  });
-}
-
-export function logout(req, res) {
-  req.logout(()=>{
-    return res.status(200).json({ success: true });
-  });
 }

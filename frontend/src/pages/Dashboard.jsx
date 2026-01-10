@@ -29,7 +29,7 @@ function Dashboard() {
   }, [user]);
 
   if (loading || fetching) {
-    return <div className="p-6 text-gray-300">Loading…</div>;
+    return <div className="p-6 text-gray-300">Loading...</div>;
   }
 
   return (

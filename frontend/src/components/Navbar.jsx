@@ -6,10 +6,7 @@ function Navbar() {
   const navigate = useNavigate();
 
   const handleLogout = async () => {
-    await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/auth/logout`, {
-      credentials: "include",
-    });
-
+    localStorage.removeItem("auth_token");
     setUser(null);
     navigate("/");
   };
