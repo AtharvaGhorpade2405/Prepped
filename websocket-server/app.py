@@ -28,7 +28,6 @@ app.add_middleware(
 
 # --- ⏱️ TIMING CONFIGURATION ---
 SILENCE_THRESHOLD = 3.0       
-INITIAL_SILENCE_LIMIT = 10.0  
 MAX_ANSWER_DURATION = 90.0    
 VAD_THRESHOLD = 800           
 CONSECUTIVE_LOUD_FRAMES = 3   
@@ -75,6 +74,13 @@ async def audio_ws(ws: WebSocket):
     topic = state["config"].get("topic", "General")
     difficulty = state["config"].get("difficulty", "medium")
     max_questions = int(state["config"].get("questions", 3))
+    
+    if difficulty=="easy":
+        INITIAL_SILENCE_LIMIT=15.0
+    elif difficulty=="medium":
+        INITIAL_SILENCE_LIMIT=25.0
+    else:
+        INITIAL_SILENCE_LIMIT=35.0
 
     # ------------------------------------------------------
     # 2️⃣ HELPER: MOVE TO NEXT QUESTION OR END

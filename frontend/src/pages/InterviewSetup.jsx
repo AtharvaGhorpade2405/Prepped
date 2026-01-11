@@ -1,9 +1,11 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
+import { useInterview } from "../context/InterviewContext";
 
 function InterviewSetup() {
   const navigate = useNavigate();
+  let {setPhase, setStarted}=useInterview();
 
   const [topic, setTopic] = useState("");
   const [difficulty, setDifficulty] = useState("medium");
@@ -14,7 +16,8 @@ function InterviewSetup() {
       alert("Please enter a topic");
       return;
     }
-
+    setPhase("idle")
+    setStarted(false)
     navigate("/interview", {
       state: {
         topic,

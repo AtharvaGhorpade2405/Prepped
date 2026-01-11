@@ -179,6 +179,7 @@ function Interview() {
             setStatus("Interview complete");
             setPhase("finished");
             setCurrentQuestion(null);
+            setEvaluations([])
             cleanup();
             break;
 
