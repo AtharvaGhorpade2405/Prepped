@@ -50,4 +50,6 @@ app.use(passport.session());
 app.use("/api", interviewRoutes);
 app.use("/api/auth", authRoutes);
 
+app.get("/health", (req, res) => res.status(200).send("OK"));
+
 export default app;
