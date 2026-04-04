@@ -39,6 +39,7 @@ app.use(
 
       // 4. Client-side JS cannot read this (Security best practice)
       httpOnly: true,
+      domain: "atharvaghorpade.in"
     },
   })
 );

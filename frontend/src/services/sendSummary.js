@@ -8,7 +8,7 @@ export default async function sendSummaryToBackend(payload, backend_url) {
       return false;
     }
 
-    const res = await fetch(`${backend_url}/api/interviews`, {
+    const res = await fetch(`${backend_url}/interviews`, {
       method: "POST",
       // credentials: "include",  <-- REMOVE THIS (we don't need cookies)
       headers: {

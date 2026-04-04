@@ -22,7 +22,7 @@ useEffect(() => {
       }
 
       try {
-        const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/interviews/mine`, {
+        const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/interviews/mine`, {
           method: "GET",
           headers: {
             // 🚨 CRITICAL CHANGE: Send the token here

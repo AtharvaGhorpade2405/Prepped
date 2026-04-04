@@ -2,7 +2,7 @@ import Navbar from "../components/Navbar";
 
 function Signup() {
   const handleGoogleSignup = () => {
-    window.location.href = `${import.meta.env.VITE_BACKEND_URL}/api/auth/google`;
+    window.location.href = `${import.meta.env.VITE_BACKEND_URL}/auth/google`;
   };
 
   return (

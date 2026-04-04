@@ -33,7 +33,7 @@ export function AuthProvider({ children }) {
 
       // 2. Fetch User using the Token
       try {
-        const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/auth/me`, {
+        const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/auth/me`, {
           method: "GET",
           headers: {
             // 🚨 THIS IS THE KEY CHANGE
