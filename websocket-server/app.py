@@ -15,7 +15,7 @@ import audioop
 app = FastAPI()
 
 origins = [          
-    "https://prepped-3qxo.onrender.com" 
+    "https://prepped.atharvaghorpade.in" 
 ]
 
 app.add_middleware(
